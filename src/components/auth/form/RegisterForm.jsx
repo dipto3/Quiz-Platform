@@ -1,47 +1,104 @@
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import Field from "../../common/Field";
 export default function RegisterForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm();
+  const navigate = useNavigate();
+
+  async function submitForm(formData) {
+    console.log(formData);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/auth/register`,
+        formData
+      );
+      if (response.status === 201) {
+        navigate("/login");
+      }
+    } catch (error) {
+      setError("root.random", {
+        type: "random",
+        message: "Something went wrong!",
+      });
+    }
+  }
   return (
     <>
-      <form className="">
+      <form className="" onSubmit={handleSubmit(submitForm)}>
         <div className="">
           <div className="mb-4">
-            <label htmlFor="name" className="block mb-2">
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300"
-              placeholder="John Doe"
-            />
+            <Field label="First Name" error={errors.full_name}>
+              <input
+                {...register("full_name", {
+                  required: "Full Name is required",
+                })}
+                className={`w-full px-4 py-3 rounded-lg border border-gray-300 ${
+                  errors.full_name ? "border-red-500" : "border-gray-200"
+                }`}
+                name="full_name"
+                type="text"
+                id="full_name"
+              />
+            </Field>
           </div>
 
           <div className="mb-4">
-            <label htmlFor="email" className="block mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300"
-              placeholder="Email address"
-            />
+            <Field label="Email" error={errors.email}>
+              <input
+                {...register("email", {
+                  required: "Full Name is required",
+                })}
+                className={`w-full px-4 py-3 rounded-lg border border-gray-300 ${
+                  errors.email ? "border-red-500" : "border-gray-200"
+                }`}
+                name="email"
+                type="email"
+                id="email"
+              />
+            </Field>
+          </div>
+
+          <div className="mb-4">
+            <Field label="Password" error={errors.password}>
+              <input
+                {...register("password", {
+                  required: "Full Name is required",
+                })}
+                className={`w-full px-4 py-3 rounded-lg border border-gray-300 ${
+                  errors.password ? "border-red-500" : "border-gray-200"
+                }`}
+                name="password"
+                type="password"
+                id="password"
+              />
+            </Field>
           </div>
         </div>
 
         <div className="flex  gap-4">
-          <div className="mb-6">
-            <label htmlFor="password" className="block mb-2">
-              Enter your Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300"
-              placeholder="Password"
-            />
-          </div>
+          {/* <div className="mb-6">
+            <Field label="Email" error={errors.email}>
+              <input
+                {...register("email", {
+                  required: "Full Name is required",
+                })}
+                className={`w-full px-4 py-3 rounded-lg border border-gray-300 ${
+                  errors.email ? "border-red-500" : "border-gray-200"
+                }`}
+                name="email"
+                type="email"
+                id="email"
+              />
+            </Field>
+          </div> */}
 
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <label htmlFor="password" className="block mb-2">
               Confirm Password
             </label>
@@ -51,7 +108,7 @@ export default function RegisterForm() {
               className="w-full px-4 py-3 rounded-lg border border-gray-300"
               placeholder="Confirm Password"
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="mb-6 flex gap-2 items-center">
