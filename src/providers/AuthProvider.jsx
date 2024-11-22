@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 export default function AuthProvider({ children }) {
   const [auth, setAuth] = useState({});
-
   return (
     <>
       <AuthContext.Provider value={{ auth, setAuth }}>

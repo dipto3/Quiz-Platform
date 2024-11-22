@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../hooks/useAuth";
 import Field from "../../common/Field";
 export default function LoginForm() {
+  const { setAuth } = useAuth();
   const {
     register,
     handleSubmit,
@@ -17,9 +19,15 @@ export default function LoginForm() {
         `${import.meta.env.VITE_SERVER_BASE_URL}/auth/login`,
         formData
       );
-      console.log(response.data.data.user.role);
+
       if (response.status === 200 && response.data.data.user.role === "user") {
-        navigate("/");
+        const { tokens, user } = response.data.data;
+        if (tokens) {
+          const authToken = tokens.accessToken;
+          const refreshToken = tokens.refreshToken;
+          setAuth({ user, authToken, refreshToken });
+          navigate("/");
+        }
       } else if (
         response.status === 200 &&
         response.data.data.user.role === "admin"
@@ -38,7 +46,7 @@ export default function LoginForm() {
   return (
     <>
       <form onSubmit={handleSubmit(submitForm)}>
-      <p className="text-red-500 text-2xl">{errors?.root?.random?.message}</p>
+        <p className="text-red-500 text-2xl">{errors?.root?.random?.message}</p>
         <div className="mb-4">
           <Field label="Email" error={errors.email}>
             <input
@@ -79,7 +87,7 @@ export default function LoginForm() {
             Login as Admin
           </label>
         </div>
-       
+
         <button
           type="submit"
           className="w-full bg-primary text-white py-3 rounded-lg mb-4"

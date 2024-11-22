@@ -14,6 +14,9 @@ export default function RegisterForm() {
   async function submitForm(formData) {
     console.log(formData);
     try {
+      if (formData.isAdmin) {
+        formData.role = "admin";
+      }
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/auth/register`,
         formData
@@ -113,6 +116,7 @@ export default function RegisterForm() {
 
         <div className="mb-6 flex gap-2 items-center">
           <input
+            {...register("isAdmin")}
             type="checkbox"
             id="admin"
             className="px-4 py-3 rounded-lg border border-gray-300"
