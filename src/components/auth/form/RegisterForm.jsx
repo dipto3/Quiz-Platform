@@ -121,7 +121,7 @@ export default function RegisterForm() {
             Register as Admin
           </label>
         </div>
-
+        <p className="text-red-500">{errors?.root?.random?.message}</p>
         <button
           type="submit"
           className="w-full bg-primary text-white py-3 rounded-lg mb-2"

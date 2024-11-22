@@ -1,28 +1,73 @@
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import Field from "../../common/Field";
 export default function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm();
+  const navigate = useNavigate();
+  async function submitForm(formData) {
+    // console.log(formData);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/auth/login`,
+        formData
+      );
+      console.log(response.data.data.user.role);
+      if (response.status === 200 && response.data.data.user.role === "user") {
+        navigate("/");
+      } else if (
+        response.status === 200 &&
+        response.data.data.user.role === "admin"
+      ) {
+        navigate("/dashboard");
+      } else {
+        navigate("/login");
+      }
+    } catch (error) {
+      setError("root.random", {
+        type: "random",
+        message: "Credentials does not exist in our records!",
+      });
+    }
+  }
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit(submitForm)}>
+      <p className="text-red-500 text-2xl">{errors?.root?.random?.message}</p>
         <div className="mb-4">
-          <label htmlFor="username" className="block mb-2">
-            Enter your username or email address
-          </label>
-          <input
-            type="text"
-            id="username"
-            className="w-full px-4 py-3 rounded-lg border border-gray-300"
-            placeholder="Username or email address"
-          />
+          <Field label="Email" error={errors.email}>
+            <input
+              {...register("email", {
+                required: "Full Name is required",
+              })}
+              className={`w-full px-4 py-3 rounded-lg border border-gray-300 ${
+                errors.email ? "border-red-500" : "border-gray-200"
+              }`}
+              name="email"
+              type="email"
+              id="email"
+            />
+          </Field>
         </div>
         <div className="mb-6">
-          <label htmlFor="password" className="block mb-2">
-            Enter your Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            className="w-full px-4 py-3 rounded-lg border border-gray-300"
-            placeholder="Password"
-          />
+          <Field label="Password" error={errors.password}>
+            <input
+              {...register("password", {
+                required: "Full Name is required",
+              })}
+              className={`w-full px-4 py-3 rounded-lg border border-gray-300 ${
+                errors.password ? "border-red-500" : "border-gray-200"
+              }`}
+              name="password"
+              type="password"
+              id="password"
+            />
+          </Field>
         </div>
         <div className="mb-6 flex gap-2 items-center">
           <input
@@ -34,6 +79,7 @@ export default function LoginForm() {
             Login as Admin
           </label>
         </div>
+       
         <button
           type="submit"
           className="w-full bg-primary text-white py-3 rounded-lg mb-4"
