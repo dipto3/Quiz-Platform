@@ -32,7 +32,13 @@ export default function LoginForm() {
         response.status === 200 &&
         response.data.data.user.role === "admin"
       ) {
-        navigate("/dashboard");
+        const { tokens, user } = response.data.data;
+        if (tokens) {
+          const authToken = tokens.accessToken;
+          const refreshToken = tokens.refreshToken;
+          setAuth({ user, authToken, refreshToken });
+          navigate("/admin/dashboard");
+        }
       } else {
         navigate("/login");
       }
