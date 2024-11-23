@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-
 import CreateQuiz from "./components/admin/quiz/CreateQuiz";
 import Dashboard from "./components/admin/Dashboard";
 import DashboardLayout from "./components/admin/DashboardLayout";

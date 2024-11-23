@@ -23,10 +23,13 @@ export default function QuestionForm() {
       formData.option4,
     ];
 
+    const matchedOption =
+      options[parseInt(correctAnswer.replace("option", "")) - 1];
+    console.log(matchedOption);
     const questionPayload = {
       question: formData.question,
       options,
-      correctAnswer, // চেকড ভ্যালু স্টেট থেকে যোগ করা হবে।
+      correctAnswer: matchedOption || null,
     };
     console.log(questionPayload);
   }
@@ -34,18 +37,15 @@ export default function QuestionForm() {
     <>
       <form onSubmit={handleSubmit(questionSubmit)}>
         <div>
-          <Field label="Question Title" error={errors.question}>
+        <Field label="Question Title" error={errors.question}>
             <input
               {...register("question", {
-                required: "Question  title is required",
+                required: "Question title is required",
               })}
-              className={`w-full mt-2 p-2 border border-input rounded-md bg-background text-foreground ${
+              className={`w-full mt-2 p-2 border ${
                 errors.question ? "border-red-500" : "border-gray-200"
               }`}
-              name="question"
-              type="text"
-              id="question"
-              placeholder="Enter Question title"
+              placeholder="Enter Question Title"
             />
           </Field>
         </div>
@@ -58,6 +58,7 @@ export default function QuestionForm() {
               {...register("correctAnswer")}
               type="checkbox"
               id="option1"
+              value="option1"
               name="correctAnswer"
               className="text-primary focus:ring-0 w-4 h-4"
               onChange={(e) =>
@@ -84,7 +85,7 @@ export default function QuestionForm() {
               type="checkbox"
               id="option2"
               name="correctAnswer"
-              value={correctAnswer}
+              value="option2"
               className="text-primary focus:ring-0 w-4 h-4"
               onChange={(e) =>
                 setCorrectAnswer(e.target.checked ? e.target.value : "")
@@ -110,7 +111,7 @@ export default function QuestionForm() {
               type="checkbox"
               id="option3"
               name="correctAnswer"
-              value={correctAnswer}
+              value="option3"
               className="text-primary focus:ring-0 w-4 h-4"
               onChange={(e) =>
                 setCorrectAnswer(e.target.checked ? e.target.value : "")
@@ -135,8 +136,8 @@ export default function QuestionForm() {
               {...register("correctAnswer")}
               type="checkbox"
               id="option4"
+              value="option4"
               name="correctAnswer"
-              value={correctAnswer}
               className="text-primary focus:ring-0 w-4 h-4"
               onChange={(e) =>
                 setCorrectAnswer(e.target.checked ? e.target.value : "")
