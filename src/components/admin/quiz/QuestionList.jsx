@@ -90,7 +90,7 @@ export default function QuestionList({ quiz, questions }) {
     // Fetch questions only when questions state changes
     async function fetchQuestions() {
       try {
-        setLoading(true); // Loading শুরু
+        setLoading(true); // Loading 
         const response = await api.get(
           `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes`
         );
@@ -100,14 +100,14 @@ export default function QuestionList({ quiz, questions }) {
           const questionsByQuiz = allQuestions.filter(
             (question) => question.id === quiz.id
           );
-          console.log(questionsByQuiz, "QB");
-          setFilteredQuestions(questionsByQuiz);
+          // console.log(questionsByQuiz, "QB");
+          setFilteredQuestions(questionsByQuiz.Questions);
         }
       } catch (err) {
         console.error("Error fetching questions:", err);
         setError(err);
       } finally {
-        setLoading(false); // Loading শেষ
+        setLoading(false); // Loading
       }
     }
 
@@ -124,12 +124,11 @@ export default function QuestionList({ quiz, questions }) {
     return <p>Error fetching questions: {error.message}</p>;
   }
 
-  console.log(filteredQuestions);
+
 
   return (
     <>
       <div className="px-4">
-
         <div className="rounded-lg overflow-hidden shadow-sm mb-4">
           <div className="bg-white p-6 !pb-2">
             <div className="flex justify-between items-center mb-4">
@@ -182,7 +181,6 @@ export default function QuestionList({ quiz, questions }) {
             </button>
           </div>
         </div>
-        
       </div>
     </>
   );
