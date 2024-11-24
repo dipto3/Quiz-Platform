@@ -7,7 +7,6 @@ import Field from "../../common/Field";
 export default function QuestionForm() {
   const { api } = useAxios();
   const [correctAnswer, setCorrectAnswer] = useState("");
-  //   const navigate = useNavigat();
   const {
     register,
     handleSubmit,
@@ -15,7 +14,7 @@ export default function QuestionForm() {
     setError,
   } = useForm();
   const { quiz, setQuiz } = useQuiz();
-  function questionSubmit(formData) {
+  async function questionSubmit(formData) {
     const options = [
       formData.option1,
       formData.option2,
@@ -32,12 +31,29 @@ export default function QuestionForm() {
       correctAnswer: matchedOption || null,
     };
     console.log(questionPayload);
+
+    try {
+      const response = await api.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes/${
+          quiz.id
+        }/questions`,
+        questionPayload
+      );
+      if (response.status === 201) {
+        console.log("Created Q");
+      }
+    } catch (error) {
+      setError("root.random", {
+        type: "random",
+        message: "Something went wrong!",
+      });
+    }
   }
   return (
     <>
       <form onSubmit={handleSubmit(questionSubmit)}>
         <div>
-        <Field label="Question Title" error={errors.question}>
+          <Field label="Question Title" error={errors.question}>
             <input
               {...register("question", {
                 required: "Question title is required",

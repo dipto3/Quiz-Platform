@@ -25,10 +25,13 @@ const useAxios = () => {
 
                     try {
                         const refreshToken = auth?.refreshToken;
-                        await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh-token`, { refreshToken });
-                        const { token } = response.data;
-                        setAuth({ ...auth, authToken: token });
-                        originalRequest.headers.Authorization = `Bearer ${token}`;
+                        const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh-token`, { refreshToken });
+                        const { accessToken, refreshToken: newRefreshToken } = response.data.data;
+                        setAuth({
+                            ...auth, authToken: accessToken,
+                            refreshToken: newRefreshToken,
+                        });
+                        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
                         return axios(originalRequest);
                     } catch (error) {
                         throw error;

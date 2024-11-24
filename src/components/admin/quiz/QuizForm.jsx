@@ -16,6 +16,7 @@ export default function QuizForm() {
   const { setQuiz } = useQuiz();
   async function submitQuiz(formData) {
     console.log(formData);
+
     try {
       const response = await api.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes`,
