@@ -79,6 +79,7 @@
 
 import { useEffect, useState } from "react";
 import useAxios from "../../../hooks/useAxios";
+import Question from "./Question";
 
 export default function QuestionList({ quiz, questions }) {
   const { api } = useAxios();
@@ -87,10 +88,11 @@ export default function QuestionList({ quiz, questions }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     // Fetch questions only when questions state changes
     async function fetchQuestions() {
       try {
-        setLoading(true); // Loading
+        // Loading
         const response = await api.get(
           `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes`
         );
@@ -115,9 +117,9 @@ export default function QuestionList({ quiz, questions }) {
     }
   }, [questions]);
 
-  if (loading) {
-    return <p>Loading questions...</p>;
-  }
+  // if (loading) {
+  //   return <p>Loading questions...</p>;
+  // }
 
   if (error) {
     return <p>Error fetching questions: {error.message}</p>;
@@ -127,61 +129,13 @@ export default function QuestionList({ quiz, questions }) {
   return (
     <>
       <div className="px-4">
-        {filteredQuestions.map((question) => (
-          <div className="rounded-lg overflow-hidden shadow-sm mb-4" key={question.id}>
-            <div className="bg-white p-6 !pb-2">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">
-                  1. Which of the following is NOT a binary tree traversal
-                  method?
-                </h3>
-              </div>
-              <div className="space-y-2">
-                <label className="flex items-center space-x-3">
-                  <input
-                    type="radio"
-                    name="answer1"
-                    className="form-radio text-buzzr-purple"
-                    checked
-                  />
-                  <span>Inorder</span>
-                </label>
-                <label className="flex items-center space-x-3">
-                  <input
-                    type="radio"
-                    name="answer1"
-                    className="form-radio text-buzzr-purple"
-                  />
-                  <span>Preorder</span>
-                </label>
-                <label className="flex items-center space-x-3">
-                  <input
-                    type="radio"
-                    name="answer1"
-                    className="form-radio text-buzzr-purple"
-                  />
-                  <span>Postorder</span>
-                </label>
-                <label className="flex items-center space-x-3">
-                  <input
-                    type="radio"
-                    name="answer1"
-                    className="form-radio text-buzzr-purple"
-                  />
-                  <span>Crossorder</span>
-                </label>
-              </div>
-            </div>
-            <div className="flex space-x-4 bg-primary/10 px-6 py-2">
-              <button className="text-red-600 hover:text-red-800 font-medium">
-                Delete
-              </button>
-              <button className="text-primary hover:text-primary/80 font-medium">
-                Edit Question
-              </button>
-            </div>
-          </div>
-        ))}
+        {filteredQuestions.length > 0 ? (
+          filteredQuestions.map((question) => (
+            <Question key={question.id} question={question} />
+          ))
+        ) : (
+          <p className="text-red-500">No questions available for this quiz.</p>
+        )}
       </div>
     </>
   );
