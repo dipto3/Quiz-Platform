@@ -124,8 +124,6 @@ export default function QuestionList({ quiz, questions }) {
     return <p>Error fetching questions: {error.message}</p>;
   }
 
-
-
   return (
     <>
       <div className="px-4">
