@@ -4,7 +4,7 @@ import useAxios from "../../../hooks/useAxios";
 import { useQuiz } from "../../../hooks/useQuiz";
 import Field from "../../common/Field";
 
-export default function QuestionForm() {
+export default function QuestionForm({ addQuestion }) {
   const { api } = useAxios();
   const [correctAnswer, setCorrectAnswer] = useState("");
   const {
@@ -13,7 +13,8 @@ export default function QuestionForm() {
     formState: { errors },
     setError,
   } = useForm();
-  const { quiz, setQuiz } = useQuiz();
+  const { quiz } = useQuiz();
+
   async function questionSubmit(formData) {
     const options = [
       formData.option1,
@@ -24,13 +25,12 @@ export default function QuestionForm() {
 
     const matchedOption =
       options[parseInt(correctAnswer.replace("option", "")) - 1];
-    console.log(matchedOption);
+
     const questionPayload = {
       question: formData.question,
       options,
       correctAnswer: matchedOption || null,
     };
-    console.log(questionPayload);
 
     try {
       const response = await api.post(
@@ -39,9 +39,10 @@ export default function QuestionForm() {
         }/questions`,
         questionPayload
       );
-      if (response.status === 201) {
-        console.log("Created Q");
-      }
+      const newQuestion = response.data.data;
+
+      // Add the new question to the parent state
+      addQuestion(newQuestion);
     } catch (error) {
       setError("root.random", {
         type: "random",

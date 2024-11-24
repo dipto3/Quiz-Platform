@@ -1,9 +1,14 @@
+import { useState } from "react";
 import { useQuiz } from "../../../hooks/useQuiz";
 import QuestionForm from "./QuestionForm";
 import QuestionList from "./QuestionList";
 
 export default function AddQuestionPage() {
   const { quiz } = useQuiz();
+  const [questions, setQuestions] = useState([]);
+  const addQuestion = (newQuestion) => {
+    setQuestions((prevQuestions) => [...prevQuestions, newQuestion]);
+  };
 
   return (
     <>
@@ -51,11 +56,11 @@ export default function AddQuestionPage() {
                   Create Quiz
                 </h2>
 
-                <QuestionForm/>
+                <QuestionForm addQuestion={addQuestion} />
               </div>
             </div>
 
-            <QuestionList />
+            <QuestionList quiz={quiz} questions={questions} />
           </div>
         </div>
       </main>
