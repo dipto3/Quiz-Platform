@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import QuizForm from "./QuizForm";
 
 export default function CreateQuiz() {
@@ -6,8 +7,8 @@ export default function CreateQuiz() {
       <main className="md:flex-grow px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div>
-            <a
-              href="#"
+            <Link
+              to="/admin/dashboard"
               className="inline-flex items-center text-sm text-gray-600 mb-6 hover:text-buzzr-purple"
             >
               <svg
@@ -25,7 +26,7 @@ export default function CreateQuiz() {
                 ></path>
               </svg>
               Back to home
-            </a>
+            </Link>
 
             <h2 className="text-3xl font-bold mb-6">
               Give your quiz title and description
