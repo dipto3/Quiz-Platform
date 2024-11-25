@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useQuiz } from "../../../hooks/useQuiz";
 import QuestionForm from "./QuestionForm";
 import QuestionList from "./QuestionList";
@@ -17,9 +18,12 @@ export default function AddQuestionPage() {
           <nav className="text-sm mb-4" aria-label="Breadcrumb">
             <ol className="list-none p-0 inline-flex">
               <li className="flex items-center">
-                <a href="#" className="text-gray-600 hover:text-buzzr-purple">
+                <Link
+                  to="/admin/dashboard"
+                  className="text-gray-600 hover:text-buzzr-purple"
+                >
                   Home
-                </a>
+                </Link>
                 <svg
                   className="fill-current w-3 h-3 mx-3"
                   xmlns="http://www.w3.org/2000/svg"

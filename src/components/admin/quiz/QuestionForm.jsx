@@ -12,6 +12,7 @@ export default function QuestionForm({ addQuestion }) {
     handleSubmit,
     formState: { errors },
     setError,
+    reset,
   } = useForm();
   const { quiz } = useQuiz();
 
@@ -43,6 +44,8 @@ export default function QuestionForm({ addQuestion }) {
 
       // Add the new question to the parent state
       addQuestion(newQuestion);
+      reset();
+      setCorrectAnswer("");
     } catch (error) {
       setError("root.random", {
         type: "random",
