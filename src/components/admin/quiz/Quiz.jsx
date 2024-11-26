@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
 import { useQuizListAdmin } from "../../../hooks/useQuizListAdmin";
-
 export default function Quiz({ quiz }) {
   const navigate = useNavigate();
 
@@ -37,6 +36,9 @@ export default function Quiz({ quiz }) {
 
   async function handleDeleteQuiz(e) {
     e.stopPropagation();
+    const confirmDelete = window.confirm("Are you sure you want to delete");
+    if (!confirmDelete) return;
+
     try {
       await api.delete(
         `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes/${quiz.id}`

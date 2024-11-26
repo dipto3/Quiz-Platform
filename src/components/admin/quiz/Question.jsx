@@ -6,7 +6,6 @@ export default function Question({ question, onDelete }) {
   const { api } = useAxios();
 
   async function handleDelete() {
-
     const confirmDelete = window.confirm("Are you sure you want to delete");
     if (!confirmDelete) return;
     try {

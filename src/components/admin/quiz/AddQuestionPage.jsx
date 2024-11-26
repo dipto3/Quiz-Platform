@@ -62,7 +62,7 @@ export default function AddQuestionPage() {
                   Create Quiz
                 </h2>
 
-                <QuestionForm addQuestion={addQuestion} />
+                <QuestionForm addQuestion={addQuestion} quiz={quizz} />
               </div>
             </div>
 

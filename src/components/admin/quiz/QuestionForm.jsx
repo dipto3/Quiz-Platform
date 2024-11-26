@@ -4,7 +4,7 @@ import useAxios from "../../../hooks/useAxios";
 import { useQuiz } from "../../../hooks/useQuiz";
 import Field from "../../common/Field";
 
-export default function QuestionForm({ addQuestion }) {
+export default function QuestionForm({ addQuestion,quiz }) {
   const { api } = useAxios();
   const [correctAnswer, setCorrectAnswer] = useState("");
   const {
@@ -14,7 +14,7 @@ export default function QuestionForm({ addQuestion }) {
     setError,
     reset,
   } = useForm();
-  const { quiz } = useQuiz();
+  // const { quiz } = useQuiz();
 
   async function questionSubmit(formData) {
     const options = [
