@@ -17,9 +17,11 @@ export default function Quiz({ quiz }) {
         payload
       );
       console.log(response.data.data);
-      setQuizzes((prevQuizzes) =>
-        prevQuizzes.map((q) => (q.id === response.data.data.id ? response.data.data : q))
+
+      const updatedQuizzes = quizzes.map((q) =>
+        q.id === response.data.data.id ? response.data.data : q
       );
+      setQuizzes(updatedQuizzes);
     } catch (error) {
       console.error(error.response.data);
       setError(error.response.data);
