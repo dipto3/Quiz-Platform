@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import useAxios from "../../../hooks/useAxios";
-import { useQuiz } from "../../../hooks/useQuiz";
 import Field from "../../common/Field";
 
-export default function QuestionForm({ addQuestion,quiz }) {
+export default function QuestionForm({
+  addQuestion,
+  quiz,
+  editQuestion,
+  editingQuestion,
+  setEditingQuestion
+}) {
+
   const { api } = useAxios();
   const [correctAnswer, setCorrectAnswer] = useState("");
   const {
@@ -13,9 +19,75 @@ export default function QuestionForm({ addQuestion,quiz }) {
     formState: { errors },
     setError,
     reset,
+    setValue,
   } = useForm();
   // const { quiz } = useQuiz();
 
+  useEffect(() => {
+    if (editingQuestion) {
+      setValue("question", editingQuestion.question);
+      setValue("option1", editingQuestion.options[0]);
+      setValue("option2", editingQuestion.options[1]);
+      setValue("option3", editingQuestion.options[2]);
+      setValue("option4", editingQuestion.options[3]);
+      setCorrectAnswer(
+        `option${
+          editingQuestion.options.indexOf(editingQuestion.correctAnswer) + 1
+        }`
+      );
+    } else {
+      reset();
+    }
+  }, [editingQuestion, setValue, reset]);
+  // async function questionSubmit(formData) {
+  //   const options = [
+  //     formData.option1,
+  //     formData.option2,
+  //     formData.option3,
+  //     formData.option4,
+  //   ];
+
+  //   const matchedOption =
+  //     options[parseInt(correctAnswer.replace("option", "")) - 1];
+
+  //   const questionPayload = {
+  //     id: editingQuestion?.id || undefined,
+  //     question: formData.question,
+  //     options,
+  //     correctAnswer: matchedOption || null,
+  //   };
+
+  //   try {
+  //     if (editingQuestion) {
+  //       // Update existing question
+  //       const response = await api.patch(
+  //         `${import.meta.env.VITE_SERVER_BASE_URL}/admin/questions/${
+  //           questionPayload.id
+  //         }`,
+  //         questionPayload
+  //       );
+  //       editQuestion(response.data); // Update parent state
+  //     } else {
+  //       const response = await api.post(
+  //         `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes/${
+  //           quiz.id
+  //         }/questions`,
+  //         questionPayload
+  //       );
+  //       const newQuestion = response.data.data;
+
+  //       // Add the new question to the parent state
+  //       addQuestion(newQuestion);
+  //       reset();
+  //       setCorrectAnswer("");
+  //     }
+  //   } catch (error) {
+  //     setError("root.random", {
+  //       type: "random",
+  //       message: "Something went wrong!",
+  //     });
+  //   }
+  // }
   async function questionSubmit(formData) {
     const options = [
       formData.option1,
@@ -28,30 +100,53 @@ export default function QuestionForm({ addQuestion,quiz }) {
       options[parseInt(correctAnswer.replace("option", "")) - 1];
 
     const questionPayload = {
+      id: editingQuestion?.id || undefined,
       question: formData.question,
       options,
       correctAnswer: matchedOption || null,
     };
 
     try {
-      const response = await api.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes/${
-          quiz.id
-        }/questions`,
-        questionPayload
-      );
-      const newQuestion = response.data.data;
+      if (editingQuestion) {
+        // Update existing question
+        const response = await api.patch(
+          `${import.meta.env.VITE_SERVER_BASE_URL}/admin/questions/${
+            questionPayload.id
+          }`,
+          questionPayload
+        );
 
-      // Add the new question to the parent state
-      addQuestion(newQuestion);
-      reset();
-      setCorrectAnswer("");
+        // Update parent state with edited question
+        editQuestion(response.data);
+
+        // Optional: Reset editingQuestion state in parent
+      } else {
+        // Create new question
+        const response = await api.post(
+          `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes/${
+            quiz.id
+          }/questions`,
+          questionPayload
+        );
+
+        const newQuestion = response.data.data;
+
+        addQuestion(newQuestion);
+
+        // Reset the form
+        reset();
+        setCorrectAnswer("");
+      }
     } catch (error) {
       setError("root.random", {
         type: "random",
         message: "Something went wrong!",
       });
     }
+  }
+  function handleCancel() {
+    reset();
+    setEditingQuestion(null);
   }
   return (
     <>
@@ -180,6 +275,15 @@ export default function QuestionForm({ addQuestion,quiz }) {
         <button className="w-full bg-primary text-white text-primary-foreground p-2 rounded-md hover:bg-primary/90 transition-colors">
           Save Quiz
         </button>
+        {editingQuestion && (
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="w-full bg-gray-500 text-white p-2 rounded-md hover:bg-gray-600 transition-colors mt-2"
+          >
+            Cancel
+          </button>
+        )}
       </form>
     </>
   );

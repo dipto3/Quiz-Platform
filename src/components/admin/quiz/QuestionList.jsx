@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useAxios from "../../../hooks/useAxios";
 import Question from "./Question";
 
-export default function QuestionList({ quiz, questions }) {
+export default function QuestionList({ quiz, questions, onEdit }) {
   const { api } = useAxios();
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -62,6 +62,7 @@ export default function QuestionList({ quiz, questions }) {
               key={question.id}
               question={question}
               onDelete={handleDeleteQuestion}
+              onEdit={onEdit}
             />
           ))
         ) : (

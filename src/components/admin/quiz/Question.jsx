@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useAxios from "../../../hooks/useAxios";
 
-export default function Question({ question, onDelete }) {
+export default function Question({ question, onDelete, onEdit }) {
   const [error, setError] = useState(null);
   const { api } = useAxios();
 
@@ -22,6 +22,9 @@ export default function Question({ question, onDelete }) {
       setError(error);
     }
   }
+  const handleEdit = () => {
+    onEdit(question); // Edit data প্যারেন্টে পাঠাও
+  };
   return (
     <>
       <div className="rounded-lg overflow-hidden shadow-sm mb-4">
@@ -56,7 +59,10 @@ export default function Question({ question, onDelete }) {
           >
             Delete
           </button>
-          <button className="text-primary hover:text-primary/80 font-medium">
+          <button
+            className="text-primary hover:text-primary/80 font-medium"
+            onClick={handleEdit}
+          >
             Edit Question
           </button>
         </div>

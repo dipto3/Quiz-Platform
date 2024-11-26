@@ -5,6 +5,7 @@ import QuestionForm from "./QuestionForm";
 import QuestionList from "./QuestionList";
 
 export default function AddQuestionPage() {
+  const [editingQuestion, setEditingQuestion] = useState(null);
   const { quiz } = useQuiz();
   const location = useLocation();
   const quizz = location.state?.quiz || quiz;
@@ -12,6 +13,20 @@ export default function AddQuestionPage() {
   const addQuestion = (newQuestion) => {
     setQuestions((prevQuestions) => [...prevQuestions, newQuestion]);
   };
+
+  const editQuestion = (updatedQuestion) => {
+    setQuestions((prevQuestions) =>
+      prevQuestions.map((q) =>
+        q.id === updatedQuestion.id ? updatedQuestion : q
+      )
+    );
+    setEditingQuestion(null);
+  };
+
+  function handleEdit(question) {
+    console.log(question, "AddParent");
+    setEditingQuestion(question);
+  }
 
   return (
     <>
@@ -62,11 +77,21 @@ export default function AddQuestionPage() {
                   Create Quiz
                 </h2>
 
-                <QuestionForm addQuestion={addQuestion} quiz={quizz} />
+                <QuestionForm
+                  addQuestion={addQuestion}
+                  quiz={quizz}
+                  editQuestion={editQuestion}
+                  editingQuestion={editingQuestion}
+                  setEditingQuestion={setEditingQuestion}
+                />
               </div>
             </div>
 
-            <QuestionList quiz={quizz} questions={questions} />
+            <QuestionList
+              quiz={quizz}
+              questions={questions}
+              onEdit={handleEdit}
+            />
           </div>
         </div>
       </main>
