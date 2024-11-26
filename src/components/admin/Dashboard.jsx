@@ -1,9 +1,7 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import QuizList from "./quiz/QuizList";
 
 export default function Dashboard() {
-
   return (
     <>
       <main className="flex-grow p-10">
