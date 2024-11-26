@@ -1,8 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
 import { useQuizListAdmin } from "../../../hooks/useQuizListAdmin";
 
 export default function Quiz({ quiz }) {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate("/admin/create-question", { state: { quiz } });
+  };
   const { api } = useAxios();
   const [error, setError] = useState(null);
   const { quizzes, setQuizzes } = useQuizListAdmin();
@@ -32,6 +38,7 @@ export default function Quiz({ quiz }) {
       <div
         className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 group cursor-pointer"
         key={quiz.id}
+        onClick={handleNavigate}
       >
         <div className="text-buzzr-purple mb-4 group-hover:scale-105 transition-all">
           <svg
@@ -76,6 +83,13 @@ export default function Quiz({ quiz }) {
             Published
           </span>
         )}
+        <button
+          type="button"
+          className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+        >
+          Delete
+        </button>
+
         {error && <p className="text-red-500">{error.message}</p>}
       </div>
     </>

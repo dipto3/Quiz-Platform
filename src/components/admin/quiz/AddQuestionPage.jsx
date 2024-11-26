@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useQuiz } from "../../../hooks/useQuiz";
 import QuestionForm from "./QuestionForm";
 import QuestionList from "./QuestionList";
 
 export default function AddQuestionPage() {
   const { quiz } = useQuiz();
-  const [questions, setQuestions] = useState([]);
+  const location = useLocation();
+  const quizz = location.state?.quiz || quiz;
+  const [questions, setQuestions] = useState(quizz?.Questions || []);
   const addQuestion = (newQuestion) => {
     setQuestions((prevQuestions) => [...prevQuestions, newQuestion]);
   };
@@ -46,7 +48,7 @@ export default function AddQuestionPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-8 lg:gap-12">
             <div className="">
-              <h2 className="text-3xl font-bold mb-4">{quiz?.title}</h2>
+              <h2 className="text-3xl font-bold mb-4">{quizz?.title}</h2>
               <div className="bg-green-100 text-green-800 text-sm font-medium px-2.5 py-0.5 rounded-full inline-block mb-4">
                 Total number of questions : 1
               </div>
@@ -64,7 +66,7 @@ export default function AddQuestionPage() {
               </div>
             </div>
 
-            <QuestionList quiz={quiz} questions={questions} />
+            <QuestionList quiz={quizz} questions={questions} />
           </div>
         </div>
       </main>
