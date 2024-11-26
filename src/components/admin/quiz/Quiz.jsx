@@ -1,4 +1,30 @@
+import { useState } from "react";
+import useAxios from "../../../hooks/useAxios";
+import { useQuizListAdmin } from "../../../hooks/useQuizListAdmin";
+
 export default function Quiz({ quiz }) {
+  const { api } = useAxios();
+  const [error, setError] = useState(null);
+  const { quizzes, setQuizzes } = useQuizListAdmin();
+  async function handleStatus() {
+    const payload = {
+      status: "published",
+      title: quiz.title,
+    };
+    try {
+      const response = await api.patch(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes/${quiz.id}`,
+        payload
+      );
+      console.log(response.data.data);
+      setQuizzes((prevQuizzes) =>
+        prevQuizzes.map((q) => (q.id === response.data.data.id ? response.data.data : q))
+      );
+    } catch (error) {
+      console.error(error.response.data);
+      setError(error.response.data);
+    }
+  }
   return (
     <>
       <div
@@ -36,6 +62,7 @@ export default function Quiz({ quiz }) {
         </p>
         {quiz.status === "draft" && (
           <button
+            onClick={handleStatus}
             type="button"
             className="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
           >
@@ -47,6 +74,7 @@ export default function Quiz({ quiz }) {
             Published
           </span>
         )}
+        {error && <p className="text-red-500">{error.message}</p>}
       </div>
     </>
   );

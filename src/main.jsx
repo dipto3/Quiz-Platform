@@ -4,15 +4,18 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App.jsx";
 import "./index.css";
 import AuthProvider from "./providers/AuthProvider.jsx";
+import QuizListProvider from "./providers/QuizListProvider.jsx";
 import QuizProvider from "./providers/QuizProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
       <QuizProvider>
-        <Router>
-          <App />
-        </Router>
+        <QuizListProvider>
+          <Router>
+            <App />
+          </Router>
+        </QuizListProvider>
       </QuizProvider>
     </AuthProvider>
   </StrictMode>
