@@ -1,4 +1,4 @@
-export default function Question({question}) {
+export default function Question({question,onNext,isLast,onPrevious,isFirst}) {
   return (
     <>
       <div className="lg:col-span-2 bg-white">
@@ -46,12 +46,32 @@ export default function Question({question}) {
               <span>1</span>
             </label>
           </div>
-          <a
-            href="./result.html"
-            className="w-1/2 text-center ml-auto block bg-primary text-white py-2 px-4 rounded-md hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary mb-6 font-semibold my-8"
+          <div className="flex justify-between items-center mt-6">
+            
+          </div>
+          <button
+            onClick={onPrevious}
+            disabled={isFirst}
+            className={`w-1/2 ml-auto py-2  px-4 rounded-md ${
+              isFirst
+                ? "bg-gray-400 text-white cursor-not-allowed"
+                : "bg-primary text-white hover:bg-indigo-800"
+            }`}
           >
-            Next
-          </a>
+            {"<<"} Previous
+          </button>
+          <button
+          type="submit"
+          onClick={onNext}
+          disabled={isLast}
+          className={`w-1/2 ml-auto py-2 px-4 rounded-md ${
+            isLast
+              ? "bg-gray-400 text-white cursor-not-allowed"
+              : "bg-primary text-white hover:bg-indigo-800"
+          }`}
+          >
+            Next  {">>"} 
+          </button>
         </div>
       </div>
     </>

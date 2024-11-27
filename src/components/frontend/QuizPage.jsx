@@ -7,6 +7,7 @@ export default function QuizPage() {
   const { id } = useParams();
   const { api } = useAxios();
   const [questions, setQuestions] = useState([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [error, setError] = useState(null);
   useEffect(() => {
     async function fetchQuestions() {
@@ -21,7 +22,18 @@ export default function QuizPage() {
       }
     }
     fetchQuestions();
-  }, []);
+  }, [id]);
+
+  function handleNextQuestion() {
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    }
+  }
+  function handlePreviousQuestion () {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
   return (
     <>
       <main className="max-w-8xl mx-auto h-[calc(100vh-10rem)]">
@@ -58,9 +70,20 @@ export default function QuizPage() {
             </div>
           </div>
 
-          {questions.map((question)=>(
-            <Question key={question.id} question={question} />
-          ))}
+          {/* {questions.map((question) => ( */}
+          {questions.length > 0 ? (
+          <Question
+            key={currentQuestionIndex}
+            question={questions[currentQuestionIndex]}
+            onNext={handleNextQuestion}
+            isLast={currentQuestionIndex === questions.length - 1}
+            isFirst={currentQuestionIndex === 0}
+            onPrevious={handlePreviousQuestion}
+          />
+        ) : (
+          <p>Loading questions...</p>
+        )}
+          {/* ))} */}
         </div>
       </main>
     </>
