@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom";
+
 export default function QuizCard({quiz}) {
   return (
     <>
-      <a
-        href="./result.html"
+      <Link
+        to="/quiz"
         className="rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow max-h-[450px] relative group cursor-pointer"
       >
         <div className="group-hover:scale-105 absolute transition-all text-white  text-center top-1/2 -translate-y-1/2 px-4">
@@ -24,7 +26,7 @@ export default function QuizCard({quiz}) {
           alt="JavaScript Hoisting"
           className="w-full h-full object-cover rounded mb-4"
         />
-      </a>
+      </Link>
     </>
   );
 }

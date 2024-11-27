@@ -6,7 +6,7 @@ import Header from "./partials/Header";
 import QuizCard from "./QuizCard";
 export default function HomePage() {
   const { auth } = useAuth();
-  const [error, setError] = useState(null);
+  const [setError] = useState(null);
   const [quizzes, setQuizzes] = useState([]);
   console.log(auth.user);
   const user = auth?.user;
@@ -28,10 +28,6 @@ export default function HomePage() {
   }, []);
   return (
     <>
-      <body className="bg-[#F5F3FF] min-h-screen">
-        <div className="container mx-auto py-3">
-          <Header />
-
           {user && (
             <div className="text-center mb-12">
               <img
@@ -67,9 +63,6 @@ export default function HomePage() {
             </section>
           </main>
 
-          <Footer />
-        </div>
-      </body>
     </>
   );
 }
