@@ -1,4 +1,4 @@
-export default function QuizCard() {
+export default function QuizCard({quiz}) {
   return (
     <>
       <a
@@ -7,11 +7,10 @@ export default function QuizCard() {
       >
         <div className="group-hover:scale-105 absolute transition-all text-white  text-center top-1/2 -translate-y-1/2 px-4">
           <h1 className=" text-5xl" style={{ fontFamily: "Jaro" }}>
-            JavaScript Basic Quiz
+          {quiz.title}
           </h1>
           <p className="mt-2 text-lg">
-            Test your knowledge of JavaScript basics with quizzes that cover
-            essential concepts, syntax, and foundational programming skills
+          {quiz.description}
           </p>
         </div>
         <div className="hidden absolute transition-all bg-black/80 w-full h-full left-0 top-0 text-white group-hover:grid place-items-center">
@@ -21,7 +20,7 @@ export default function QuizCard() {
           </div>
         </div>
         <img
-          src="./assets/backgrounds/2.jpg"
+          src={quiz.thumbnail}
           alt="JavaScript Hoisting"
           className="w-full h-full object-cover rounded mb-4"
         />

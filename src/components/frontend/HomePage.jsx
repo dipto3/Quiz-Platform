@@ -1,12 +1,31 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Footer from "./partials/Footer";
 import Header from "./partials/Header";
 import QuizCard from "./QuizCard";
-
 export default function HomePage() {
   const { auth } = useAuth();
+  const [error, setError] = useState(null);
+  const [quizzes, setQuizzes] = useState([]);
   console.log(auth.user);
   const user = auth?.user;
+  useEffect(() => {
+    async function getQuiz() {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_SERVER_BASE_URL}/quizzes`
+        );
+        if (response.status === 200) {
+          setQuizzes(response.data.data);
+        }
+      } catch (error) {
+        console.error("Error fetching quizzes:", error);
+        setError(error);
+      }
+    }
+    getQuiz();
+  }, []);
   return (
     <>
       <body className="bg-[#F5F3FF] min-h-screen">
@@ -36,7 +55,14 @@ export default function HomePage() {
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <QuizCard />
+                {quizzes.length > 0 ? (
+                  quizzes.map((quiz) => <QuizCard key={quiz.id} quiz={quiz} />)
+                ) : (
+                  <p className="text-center text-gray-600">
+                    No quizzes available
+                  </p>
+                )}
+               
               </div>
             </section>
           </main>
