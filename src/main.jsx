@@ -10,6 +10,7 @@ import QuizProvider from "./providers/QuizProvider.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
+    <QuizListProvider>
       <QuizProvider>
         <QuizListProvider>
           <Router>
@@ -17,6 +18,7 @@ createRoot(document.getElementById("root")).render(
           </Router>
         </QuizListProvider>
       </QuizProvider>
+      </QuizListProvider>
     </AuthProvider>
   </StrictMode>
 );

@@ -23,7 +23,7 @@ export default function Question({ question, onDelete, onEdit }) {
     }
   }
   const handleEdit = () => {
-    onEdit(question); // Edit data প্যারেন্টে পাঠাও
+    onEdit(question);
   };
   return (
     <>
