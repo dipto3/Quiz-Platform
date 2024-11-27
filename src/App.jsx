@@ -21,7 +21,7 @@ export default function App() {
         </Route>
 
         <Route element={<FrontendLayout />}>
-          <Route path="quiz" element={<QuizPage />} />
+          <Route path="quiz/:id" element={<QuizPage />} />
         </Route>
         </Route>
         <Route element={<FrontendLayout />}>
