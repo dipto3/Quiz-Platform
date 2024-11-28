@@ -40,6 +40,8 @@ export default function QuizPage() {
   }
 
 
+
+
   function handleAnswerChange(questionId, answer){
     setAnswers(
      {
@@ -49,6 +51,18 @@ export default function QuizPage() {
     );
   }
   // console.log(answers,"Answer");
+
+  async function handleQuizSubmit(){
+  
+    try {
+      const payload = { answers };
+      const response = await api.post(`${import.meta.env.VITE_SERVER_BASE_URL}/quizzes/${id}/attempt`,payload);
+      console.log("quiz submitted successfully");
+    } catch (error) {
+      console.error(error);
+      setError(error);
+    }
+  }
   
   return (
     <>
@@ -66,6 +80,7 @@ export default function QuizPage() {
               isFirst={currentQuestionIndex === 0}
               onPrevious={handlePreviousQuestion}
               onAnswerChange={handleAnswerChange}
+              onQuizSubmit={handleQuizSubmit}
             />
           ) : (
             <p>Loading questions...</p>
