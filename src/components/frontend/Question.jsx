@@ -4,7 +4,12 @@ export default function Question({
   isLast,
   onPrevious,
   isFirst,
+  onAnswerChange,
 }) {
+  function handleChange(option) {
+    onAnswerChange(question.id, option);
+  }
+
   return (
     <>
       <div className="lg:col-span-2 bg-white">
@@ -19,9 +24,11 @@ export default function Question({
                 className="flex items-center space-x-3 py-3 px-4 bg-primary/5 rounded-md text-lg"
               >
                 <input
-                  type="checkbox"
+                  type="radio"
                   name="answer1"
                   className="form-radio text-buzzr-purple"
+                  value={option}
+                  onChange={() => handleChange(option)}
                 />
                 <span>{option}</span>
               </label>
@@ -30,7 +37,7 @@ export default function Question({
           <div className="flex justify-between items-center mt-6"></div>
           <button
             onClick={onPrevious}
-            disabled={isFirst}
+            hidden={isFirst}
             className={`w-1/2 ml-auto py-2  px-4 rounded-md ${
               isFirst
                 ? "bg-gray-400 text-white cursor-not-allowed"
@@ -40,9 +47,8 @@ export default function Question({
             {"<<"} Previous
           </button>
           <button
-            type="submit"
             onClick={onNext}
-            disabled={isLast}
+            hidden={isLast}
             className={`w-1/2 ml-auto py-2 px-4 rounded-md ${
               isLast
                 ? "bg-gray-400 text-white cursor-not-allowed"
@@ -51,6 +57,14 @@ export default function Question({
           >
             Next {">>"}
           </button>
+          {isLast && (
+            <button
+              type="button"
+              className="text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+            >
+              Submit
+            </button>
+          )}
         </div>
       </div>
     </>

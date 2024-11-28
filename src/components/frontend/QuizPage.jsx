@@ -11,6 +11,7 @@ export default function QuizPage() {
   const [quiz, setQuiz] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [error, setError] = useState(null);
+  const [answers, setAnswers] = useState({});
   useEffect(() => {
     async function fetchQuestions() {
       try {
@@ -37,13 +38,25 @@ export default function QuizPage() {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
   }
+
+
+  function handleAnswerChange(questionId, answer){
+    setAnswers(
+     {
+      ...answers,
+       [questionId]: answer,
+     }
+    );
+  }
+  // console.log(answers,"Answer");
+  
   return (
     <>
       <main className="max-w-8xl mx-auto h-[calc(100vh-10rem)]">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 h-full">
           <QuizDashboard quiz={quiz} />
 
-          {/* {questions.map((question) => ( */}
+         
           {questions.length > 0 ? (
             <Question
               key={currentQuestionIndex}
@@ -52,11 +65,12 @@ export default function QuizPage() {
               isLast={currentQuestionIndex === questions.length - 1}
               isFirst={currentQuestionIndex === 0}
               onPrevious={handlePreviousQuestion}
+              onAnswerChange={handleAnswerChange}
             />
           ) : (
             <p>Loading questions...</p>
           )}
-          {/* ))} */}
+        
         </div>
       </main>
     </>
