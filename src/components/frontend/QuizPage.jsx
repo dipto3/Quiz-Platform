@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
 import Question from "./Question";
 import QuizDashboard from "./QuizDashboard";
@@ -12,6 +12,7 @@ export default function QuizPage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [error, setError] = useState(null);
   const [answers, setAnswers] = useState({});
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchQuestions() {
       try {
@@ -39,38 +40,37 @@ export default function QuizPage() {
     }
   }
 
-
-
-
-  function handleAnswerChange(questionId, answer){
-    setAnswers(
-     {
+  function handleAnswerChange(questionId, answer) {
+    setAnswers({
       ...answers,
-       [questionId]: answer,
-     }
-    );
+      [questionId]: answer,
+    });
   }
   // console.log(answers,"Answer");
 
-  async function handleQuizSubmit(){
-  
+  async function handleQuizSubmit() {
     try {
       const payload = { answers };
-      const response = await api.post(`${import.meta.env.VITE_SERVER_BASE_URL}/quizzes/${id}/attempt`,payload);
+      const response = await api.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/quizzes/${id}/attempt`,
+        payload
+      );
       console.log("quiz submitted successfully");
+      navigate("/results", {
+        state: { resultData: response.data.data, attemptedQuiz: quiz },
+      });
     } catch (error) {
       console.error(error);
       setError(error);
     }
   }
-  
+
   return (
     <>
       <main className="max-w-8xl mx-auto h-[calc(100vh-10rem)]">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 h-full">
           <QuizDashboard quiz={quiz} />
 
-         
           {questions.length > 0 ? (
             <Question
               key={currentQuestionIndex}
@@ -85,7 +85,6 @@ export default function QuizPage() {
           ) : (
             <p>Loading questions...</p>
           )}
-        
         </div>
       </main>
     </>
