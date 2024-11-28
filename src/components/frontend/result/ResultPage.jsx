@@ -18,7 +18,7 @@ export default function ResultPage() {
 
           <ResultDashboard resultData={resultData}/>
 
-          <Answer attemptedQuiz={attemptedQuiz}/>
+          <Answer attemptedQuiz={attemptedQuiz}  resultData={resultData}/>
         </div>
       </body>
     </>

@@ -1,11 +1,26 @@
-export default function Answer({ attemptedQuiz }) {
-  // console.log(attemptedQuiz.questions);
+export default function Answer({ resultData, attemptedQuiz }) {
+  console.log(attemptedQuiz.questions);
+
+  const submittedAnswers = resultData?.submitted_answers || [];
+  const correctAnswers = resultData?.correct_answers || [];
+
+  if (!attemptedQuiz?.questions || !submittedAnswers) {
+    return <p>Loading data...</p>;
+  }
+
   return (
-    <>
-      <div className="max-h-screen md:w-1/2 flex items-center justify-center h-full p-8">
-        <div className="h-[calc(100vh-50px)] overflow-y-scroll ">
-          <div className="px-4">
-            {attemptedQuiz.questions.map((question) => (
+    <div className="max-h-screen md:w-1/2 flex items-center justify-center h-full p-8">
+      <div className="h-[calc(100vh-50px)] overflow-y-scroll">
+        <div className="px-4">
+          {attemptedQuiz.questions.map((question) => {
+            const submittedAnswer = submittedAnswers.find(
+              (submitted) => submitted.question_id === question.id
+            )?.answer;
+            const correctAnswer = correctAnswers.find(
+              (correct) => correct.question_id === question.id
+            )?.answer;
+
+            return (
               <div
                 className="rounded-lg overflow-hidden shadow-sm mb-4"
                 key={question.id}
@@ -17,27 +32,42 @@ export default function Answer({ attemptedQuiz }) {
                     </h3>
                   </div>
                   <div className="space-y-2">
-                    {question.options.map((option) => (
-                      <label
-                        key={option}
-                        className="flex items-center space-x-3"
-                      >
-                        <input
-                          type="radio"
-                          name={`answer${question.id}`}
-                          className="form-radio text-buzzr-purple"
-                          checked={question.correctAnswer === option}
-                        />
-                        <span>{option}</span>
-                      </label>
-                    ))}
+                    {question.options.map((option) => {
+                      const isSubmitted = submittedAnswer === option;
+                      const isCorrect = correctAnswer === option;
+
+                      return (
+                        <label
+                          key={option}
+                          className="flex items-center space-x-3"
+                        >
+                          <input
+                            type="radio"
+                            className="form-radio text-buzzr-purple"
+                            checked={question.correctAnswer === option}
+                            readOnly
+                          />
+                          <span
+                            className={`${
+                              isSubmitted && !isCorrect
+                                ? "text-red-500"
+                                : isCorrect
+                                ? "text-green-500"
+                                : ""
+                            }`}
+                          >
+                            {option}
+                          </span>
+                        </label>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
-    </>
+    </div>
   );
 }
