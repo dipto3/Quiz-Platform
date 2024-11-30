@@ -1,5 +1,5 @@
 import { useAuth } from "../../../hooks/useAuth";
-
+import avatar from "../../../../public/assets/avater.webp";
 export default function LeaderboardProfile({leaderboardData}) {
   const { auth } = useAuth();
   console.log(auth, "Auth data");
@@ -49,7 +49,7 @@ export default function LeaderboardProfile({leaderboardData}) {
       <div className="bg-primary rounded-lg p-6 text-white">
         <div className="flex flex-col items-center mb-6">
           <img
-            src="./assets/avater.webp"
+            src={avatar}
             alt="Profile Pic"
             className="w-20 h-20 rounded-full border-4 border-white mb-4 object-cover"
           />

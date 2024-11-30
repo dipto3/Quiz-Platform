@@ -1,5 +1,5 @@
+import avatar from "../../../../public/assets/avater.webp";
 import { useAuth } from "../../../hooks/useAuth";
-
 export default function QuizRanking({ leaderboardData }) {
   const { auth } = useAuth();
   if (!leaderboardData || !Array.isArray(leaderboardData.attempts)) {
@@ -41,7 +41,7 @@ export default function QuizRanking({ leaderboardData }) {
             >
               <div className="flex items-center">
                 <img
-                  src="./assets/avater.webp"
+                  src={avatar}
                   alt="User Avatar"
                   className="object-cover w-10 h-10 rounded-full mr-4"
                 />
