@@ -7,7 +7,7 @@ export default function QuizProvider({ children }) {
     return savedQuizzes ? JSON.parse(savedQuizzes) : [];
   });
   useEffect(() => {
-    if (quiz.length > 0) {
+    if (quiz) {
       localStorage.setItem("quiz", JSON.stringify(quiz));
     } else {
       localStorage.removeItem("quiz");
