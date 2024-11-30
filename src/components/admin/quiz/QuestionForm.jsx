@@ -39,55 +39,7 @@ export default function QuestionForm({
       reset();
     }
   }, [editingQuestion, setValue, reset]);
-  // async function questionSubmit(formData) {
-  //   const options = [
-  //     formData.option1,
-  //     formData.option2,
-  //     formData.option3,
-  //     formData.option4,
-  //   ];
 
-  //   const matchedOption =
-  //     options[parseInt(correctAnswer.replace("option", "")) - 1];
-
-  //   const questionPayload = {
-  //     id: editingQuestion?.id || undefined,
-  //     question: formData.question,
-  //     options,
-  //     correctAnswer: matchedOption || null,
-  //   };
-
-  //   try {
-  //     if (editingQuestion) {
-  //       // Update existing question
-  //       const response = await api.patch(
-  //         `${import.meta.env.VITE_SERVER_BASE_URL}/admin/questions/${
-  //           questionPayload.id
-  //         }`,
-  //         questionPayload
-  //       );
-  //       editQuestion(response.data); // Update parent state
-  //     } else {
-  //       const response = await api.post(
-  //         `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes/${
-  //           quiz.id
-  //         }/questions`,
-  //         questionPayload
-  //       );
-  //       const newQuestion = response.data.data;
-
-  //       // Add the new question to the parent state
-  //       addQuestion(newQuestion);
-  //       reset();
-  //       setCorrectAnswer("");
-  //     }
-  //   } catch (error) {
-  //     setError("root.random", {
-  //       type: "random",
-  //       message: "Something went wrong!",
-  //     });
-  //   }
-  // }
   async function questionSubmit(formData) {
     const options = [
       formData.option1,
@@ -108,7 +60,7 @@ export default function QuestionForm({
 
     try {
       if (editingQuestion) {
-        // Update existing question
+      
         const response = await api.patch(
           `${import.meta.env.VITE_SERVER_BASE_URL}/admin/questions/${
             questionPayload.id
@@ -116,12 +68,12 @@ export default function QuestionForm({
           questionPayload
         );
 
-        // Update parent state with edited question
+       
         editQuestion(response.data);
 
-        // Optional: Reset editingQuestion state in parent
+      
       } else {
-        // Create new question
+      
         const response = await api.post(
           `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes/${
             quiz.id

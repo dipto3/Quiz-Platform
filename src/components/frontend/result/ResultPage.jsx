@@ -8,14 +8,14 @@ export default function ResultPage() {
   const { auth } = useAuth();
   const location = useLocation();
   const { results } = useResultData();
-  console.log(results, "Results from hook");
+  // console.log(results, "Results from hook");
   // const resultData = results;
   const { attemptedQuiz } = location.state || {};
   const resultData =
     results.find((result) => result.quizId === attemptedQuiz.id && result.userId === auth.user.id)?.data || [];
 
-  console.log(attemptedQuiz, "attemptedQuiz");
-  console.log(resultData, "resultData");
+  // console.log(attemptedQuiz, "attemptedQuiz");
+  // console.log(resultData, "resultData");
   return (
     <>
       <body className="bg-background text-foreground min-h-screen">

@@ -7,7 +7,7 @@ export default function HomePage() {
   const { auth } = useAuth();
   const [setError] = useState(null);
   const [quizzes, setQuizzes] = useState([]);
-  console.log(auth.user);
+  // console.log(auth.user);
   const user = auth?.user;
   useEffect(() => {
     async function getQuiz() {

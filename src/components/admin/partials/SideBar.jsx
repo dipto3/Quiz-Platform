@@ -4,7 +4,7 @@ import { useAuth } from "../../../hooks/useAuth";
 export default function SideBar() {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
-  console.log(auth.user);
+  // console.log(auth.user);
   const user = auth?.user;
   function handleLogout() {
     setAuth({});

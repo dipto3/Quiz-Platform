@@ -15,7 +15,7 @@ export default function QuizForm() {
   } = useForm();
   const { setQuiz } = useQuiz();
   async function submitQuiz(formData) {
-    console.log(formData);
+    // console.log(formData);
 
     try {
       const response = await api.post(

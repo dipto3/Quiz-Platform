@@ -5,7 +5,7 @@ export default function ResultDashboard({resultData}) {
   // const { results } = useResultData();
   // console.log(results, "results returned");
   // const resultData = results;
-  console.log(resultData, "from props");
+  // console.log(resultData, "from props");
   const totalQuestions = resultData.correct_answers.length;
 
   const correctAnswers = resultData.correct_answers.filter((correct) =>

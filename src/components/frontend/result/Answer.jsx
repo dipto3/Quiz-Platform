@@ -1,6 +1,6 @@
 export default function Answer({ resultData, attemptedQuiz }) {
-  console.log(attemptedQuiz.questions);
-  console.log(resultData,"r");
+  // console.log(attemptedQuiz.questions);
+  // console.log(resultData,"r");
 
   const submittedAnswers = resultData?.submitted_answers || [];
   const correctAnswers = resultData?.correct_answers || [];

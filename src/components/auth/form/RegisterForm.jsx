@@ -12,7 +12,7 @@ export default function RegisterForm() {
   const navigate = useNavigate();
 
   async function submitForm(formData) {
-    console.log(formData);
+    // console.log(formData);
     try {
       if (formData.isAdmin) {
         formData.role = "admin";

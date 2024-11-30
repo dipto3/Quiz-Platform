@@ -13,7 +13,7 @@ export default function QuestionList({ quiz, questions, onEdit }) {
 
     async function fetchQuestions() {
       try {
-        // Loading
+       
         const response = await api.get(
           `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes`
         );
@@ -29,7 +29,7 @@ export default function QuestionList({ quiz, questions, onEdit }) {
         console.error("Error fetching questions:", err);
         setError(err);
       } finally {
-        setLoading(false); // Loading
+        setLoading(false); 
       }
     }
 

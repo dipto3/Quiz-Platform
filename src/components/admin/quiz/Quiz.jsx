@@ -22,7 +22,7 @@ export default function Quiz({ quiz }) {
         `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes/${quiz.id}`,
         payload
       );
-      console.log(response.data.data);
+      // console.log(response.data.data);
 
       const updatedQuizzes = quizzes.map((q) =>
         q.id === response.data.data.id ? response.data.data : q
