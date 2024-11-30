@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 import useAxios from "../../hooks/useAxios";
 import { useResultData } from "../../hooks/useResultData";
 import Question from "./Question";
 import QuizDashboard from "./QuizDashboard";
 
 export default function QuizPage() {
+  const { auth } = useAuth();
   const { id } = useParams();
   const { api } = useAxios();
   const { results, setResults } = useResultData();
@@ -60,7 +62,7 @@ export default function QuizPage() {
       console.log("quiz submitted successfully");
       setResults((prevResults) => [
         ...prevResults,
-        { quizId: id, data: response.data.data },
+        { quizId: id, data: response.data.data, userId: auth.user.id },
       ]);
 
       navigate("/results", {
@@ -71,7 +73,6 @@ export default function QuizPage() {
       setError(error);
     }
   }
-  
 
   return (
     <>

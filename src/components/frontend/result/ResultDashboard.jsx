@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useResultData } from "../../../hooks/useResultData";
 
 export default function ResultDashboard({resultData}) {
@@ -56,12 +57,12 @@ export default function ResultDashboard({resultData}) {
                   </div>
                 </div>
 
-                <a
-                  href="./leaderboard_page.html"
+                <Link
+                  to={`/leaderboard/${resultData.quiz.id}`}
                   className=" bg-secondary py-3 rounded-md hover:bg-secondary/90 transition-colors text-lg font-medium underline text-white"
                 >
                   View Leaderboard
-                </a>
+                </Link>
               </div>
 
               <div className="w-1/2 bg-primary/80 rounded-md border border-white/20 flex items-center p-4">

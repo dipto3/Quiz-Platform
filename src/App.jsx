@@ -10,6 +10,7 @@ import PrivateRoutes from "./routes/PrivateRoutes";
 import FrontendLayout from "./components/frontend/FrontendLayout";
 import QuizPage from "./components/frontend/QuizPage";
 import ResultPage from "./components/frontend/result/ResultPage";
+import LeaderboardPage from "./components/frontend/leaderboard/LeaderboardPage";
 export default function App() {
   return (
     <>
@@ -23,7 +24,7 @@ export default function App() {
 
         <Route element={<FrontendLayout />}>
           <Route path="quiz/:id" element={<QuizPage />} />
-         
+          <Route path="leaderboard/:quizId" element={<LeaderboardPage />} />
         </Route>
         <Route path="results" element={<ResultPage />} />
         </Route>
