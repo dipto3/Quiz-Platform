@@ -8,6 +8,7 @@ export default function SideBar() {
   const user = auth?.user;
   function handleLogout() {
     setAuth({});
+    localStorage.removeItem("auth");
     navigate("/login");
   }
   return (

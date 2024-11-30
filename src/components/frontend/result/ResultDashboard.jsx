@@ -1,4 +1,10 @@
-export default function ResultDashboard({ resultData }) {
+import { useResultData } from "../../../hooks/useResultData";
+
+export default function ResultDashboard({resultData}) {
+  // const { results } = useResultData();
+  // console.log(results, "results returned");
+  // const resultData = results;
+  console.log(resultData, "from props");
   const totalQuestions = resultData.correct_answers.length;
 
   const correctAnswers = resultData.correct_answers.filter((correct) =>
@@ -14,7 +20,7 @@ export default function ResultDashboard({ resultData }) {
   const wrongCount = totalQuestions - correctCount;
   const correctMarks = correctAnswers.reduce((total, correct) => {
     return total + correct.marks;
-}, 0);
+  }, 0);
   return (
     <>
       <div className="max-h-screen overflow-hidden hidden lg:flex lg:w-1/2 bg-primary flex-col justify-center p-12 relative">
@@ -61,7 +67,7 @@ export default function ResultDashboard({ resultData }) {
               <div className="w-1/2 bg-primary/80 rounded-md border border-white/20 flex items-center p-4">
                 <div className="flex-1">
                   <p className="text-2xl font-bold">
-                  {correctMarks}/{resultData.quiz.total_marks}
+                    {correctMarks}/{resultData.quiz.total_marks}
                   </p>
                   <p>Your Mark</p>
                 </div>

@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useAxios from "../../hooks/useAxios";
+import { useResultData } from "../../hooks/useResultData";
 import Question from "./Question";
 import QuizDashboard from "./QuizDashboard";
 
 export default function QuizPage() {
   const { id } = useParams();
   const { api } = useAxios();
+  const { results, setResults } = useResultData();
   const [questions, setQuestions] = useState([]);
   const [quiz, setQuiz] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -56,14 +58,20 @@ export default function QuizPage() {
         payload
       );
       console.log("quiz submitted successfully");
+      setResults((prevResults) => [
+        ...prevResults,
+        { quizId: id, data: response.data.data },
+      ]);
+
       navigate("/results", {
-        state: { resultData: response.data.data, attemptedQuiz: quiz },
+        state: { attemptedQuiz: quiz },
       });
     } catch (error) {
       console.error(error);
       setError(error);
     }
   }
+  
 
   return (
     <>

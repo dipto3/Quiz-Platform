@@ -6,19 +6,20 @@ import "./index.css";
 import AuthProvider from "./providers/AuthProvider.jsx";
 import QuizListProvider from "./providers/QuizListProvider.jsx";
 import QuizProvider from "./providers/QuizProvider.jsx";
+import ResultDataProvider from "./providers/ResultDataProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-    <QuizListProvider>
-      <QuizProvider>
+      <ResultDataProvider>
         <QuizListProvider>
-          <Router>
-            <App />
-          </Router>
+          <QuizProvider>
+            <Router>
+              <App />
+            </Router>
+          </QuizProvider>
         </QuizListProvider>
-      </QuizProvider>
-      </QuizListProvider>
+      </ResultDataProvider>
     </AuthProvider>
   </StrictMode>
 );
