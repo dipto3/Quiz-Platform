@@ -13,7 +13,6 @@ export default function QuestionList({ quiz, questions, onEdit }) {
 
     async function fetchQuestions() {
       try {
-       
         const response = await api.get(
           `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes`
         );
@@ -29,7 +28,7 @@ export default function QuestionList({ quiz, questions, onEdit }) {
         console.error("Error fetching questions:", err);
         setError(err);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     }
 
@@ -44,9 +43,9 @@ export default function QuestionList({ quiz, questions, onEdit }) {
     );
     setFilteredQuestions(deletedQuestions);
   }
-  // if (loading) {
-  //   return <p>Loading questions...</p>;
-  // }
+  if (loading) {
+    return <p>Fetching questions...</p>;
+  }
 
   if (error) {
     return <p>Error fetching questions: {error.message}</p>;

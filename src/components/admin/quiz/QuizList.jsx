@@ -29,6 +29,7 @@ export default function QuizList() {
       ) : (
         <p>No quizzes found</p>
       )}
+      {error && <p className="text-red-500">Error: {error.message}</p>}
     </>
   );
 }
