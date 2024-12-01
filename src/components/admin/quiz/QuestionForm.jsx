@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useAxios from "../../../hooks/useAxios";
 import Field from "../../common/Field";
-
 export default function QuestionForm({
   addQuestion,
   quiz,
   editQuestion,
   editingQuestion,
-  setEditingQuestion
+  setEditingQuestion,
 }) {
-
   const { api } = useAxios();
   const [correctAnswer, setCorrectAnswer] = useState("");
   const {
@@ -60,7 +60,6 @@ export default function QuestionForm({
 
     try {
       if (editingQuestion) {
-      
         const response = await api.patch(
           `${import.meta.env.VITE_SERVER_BASE_URL}/admin/questions/${
             questionPayload.id
@@ -68,12 +67,9 @@ export default function QuestionForm({
           questionPayload
         );
 
-       
         editQuestion(response.data);
-
-      
+        toast.success("Question Updated successfully!");
       } else {
-      
         const response = await api.post(
           `${import.meta.env.VITE_SERVER_BASE_URL}/admin/quizzes/${
             quiz.id
@@ -88,6 +84,7 @@ export default function QuestionForm({
         // Reset the form
         reset();
         setCorrectAnswer("");
+        toast.success("Question Created successfully!");
       }
     } catch (error) {
       setError("root.random", {

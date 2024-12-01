@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useAxios from "../../../hooks/useAxios";
 import { useQuiz } from "../../../hooks/useQuiz";
 import Field from "../../common/Field";
-
 export default function QuizForm() {
   const { api } = useAxios();
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export default function QuizForm() {
         const quizData = response.data.data;
         setQuiz(quizData);
         navigate("/admin/create-question");
+        toast.success("Quiz Created successfully!");
       }
     } catch (error) {
       setError("root.random", {
@@ -84,6 +86,7 @@ export default function QuizForm() {
           Next
         </button>
       </form>
+      <p className="text-red-500">{errors?.root?.random?.message}</p>
     </>
   );
 }

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxios from "../../../hooks/useAxios";
 import { useQuizListAdmin } from "../../../hooks/useQuizListAdmin";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function Quiz({ quiz }) {
   const navigate = useNavigate();
 
@@ -28,6 +30,7 @@ export default function Quiz({ quiz }) {
         q.id === response.data.data.id ? response.data.data : q
       );
       setQuizzes(updatedQuizzes);
+      toast.success("Quiz published successfully");
     } catch (error) {
       console.error(error.response.data);
       setError(error.response.data);
@@ -45,6 +48,8 @@ export default function Quiz({ quiz }) {
       );
       const updatedQuizzes = quizzes.filter((q) => q.id !== quiz.id);
       setQuizzes(updatedQuizzes);
+      toast.success("Quiz deleted successfully");
+      
     } catch (error) {
       console.error(error);
       setError(error);

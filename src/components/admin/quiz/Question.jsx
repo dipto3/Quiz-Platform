@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import useAxios from "../../../hooks/useAxios";
-
 export default function Question({ question, onDelete, onEdit }) {
   const [error, setError] = useState(null);
   const { api } = useAxios();
@@ -14,6 +15,7 @@ export default function Question({ question, onDelete, onEdit }) {
       );
       if (response.status === 200) {
         onDelete(question.id);
+        toast.success("Question Deleted successfully!");
       } else {
         throw new Error("Failed to delete question");
       }

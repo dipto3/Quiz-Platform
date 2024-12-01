@@ -5,7 +5,8 @@ import useAxios from "../../hooks/useAxios";
 import { useResultData } from "../../hooks/useResultData";
 import Question from "./Question";
 import QuizDashboard from "./QuizDashboard";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function QuizPage() {
   const { auth } = useAuth();
   const { id } = useParams();
@@ -60,6 +61,7 @@ export default function QuizPage() {
         payload
       );
       console.log("quiz submitted successfully");
+      toast.success("Quiz submitted successfully!");
       setResults((prevResults) => [
         ...prevResults,
         { quizId: id, data: response.data.data, userId: auth.user.id },
@@ -68,6 +70,7 @@ export default function QuizPage() {
       navigate("/results", {
         state: { attemptedQuiz: quiz },
       });
+
     } catch (error) {
       console.error(error);
       setError(error);
