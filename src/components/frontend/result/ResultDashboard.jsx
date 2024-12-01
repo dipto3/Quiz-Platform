@@ -1,11 +1,11 @@
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 import { Link } from "react-router-dom";
-import { useResultData } from "../../../hooks/useResultData";
-
-export default function ResultDashboard({resultData}) {
+export default function ResultDashboard({ resultData }) {
   // const { results } = useResultData();
   // console.log(results, "results returned");
   // const resultData = results;
-  // console.log(resultData, "from props");
+  console.log(resultData, "from props");
   const totalQuestions = resultData.correct_answers.length;
 
   const correctAnswers = resultData.correct_answers.filter((correct) =>
@@ -73,10 +73,12 @@ export default function ResultDashboard({resultData}) {
                   <p>Your Mark</p>
                 </div>
                 <div>
-                  <img
-                    src="./assets/icons/circular-progressbar.svg"
-                    className="h-20"
+                  
+                  <CircularProgressbar className="h-20"
+                    value={resultData.percentage}
+                    text={`${resultData.percentage}%`}
                   />
+                  
                 </div>
               </div>
             </div>
