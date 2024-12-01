@@ -72,7 +72,7 @@ export default function LoginForm() {
           <Field label="Password" error={errors.password}>
             <input
               {...register("password", {
-                required: "Full Name is required",
+                required: "Password is required",
               })}
               className={`w-full px-4 py-3 rounded-lg border border-gray-300 ${
                 errors.password ? "border-red-500" : "border-gray-200"

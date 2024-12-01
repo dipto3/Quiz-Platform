@@ -55,7 +55,7 @@ export default function RegisterForm() {
             <Field label="Email" error={errors.email}>
               <input
                 {...register("email", {
-                  required: "Full Name is required",
+                  required: "Email is required",
                 })}
                 className={`w-full px-4 py-3 rounded-lg border border-gray-300 ${
                   errors.email ? "border-red-500" : "border-gray-200"
@@ -71,7 +71,7 @@ export default function RegisterForm() {
             <Field label="Password" error={errors.password}>
               <input
                 {...register("password", {
-                  required: "Full Name is required",
+                  required: "Password is required",
                 })}
                 className={`w-full px-4 py-3 rounded-lg border border-gray-300 ${
                   errors.password ? "border-red-500" : "border-gray-200"
@@ -84,35 +84,7 @@ export default function RegisterForm() {
           </div>
         </div>
 
-        <div className="flex  gap-4">
-          {/* <div className="mb-6">
-            <Field label="Email" error={errors.email}>
-              <input
-                {...register("email", {
-                  required: "Full Name is required",
-                })}
-                className={`w-full px-4 py-3 rounded-lg border border-gray-300 ${
-                  errors.email ? "border-red-500" : "border-gray-200"
-                }`}
-                name="email"
-                type="email"
-                id="email"
-              />
-            </Field>
-          </div> */}
-
-          {/* <div className="mb-6">
-            <label htmlFor="password" className="block mb-2">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300"
-              placeholder="Confirm Password"
-            />
-          </div> */}
-        </div>
+        <div className="flex  gap-4"></div>
 
         <div className="mb-6 flex gap-2 items-center">
           <input
