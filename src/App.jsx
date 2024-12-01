@@ -17,6 +17,9 @@ export default function App() {
   return (
     <>
       <Routes>
+        <Route element={<FrontendLayout />}>
+          <Route path="/" element={<HomePage />} />
+        </Route>
         <Route element={<PrivateRoutes />}>
           <Route path="/admin" element={<DashboardLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
@@ -30,12 +33,9 @@ export default function App() {
           </Route>
           <Route path="results" element={<ResultPage />} />
         </Route>
-        <Route element={<FrontendLayout />}>
-          <Route path="/" element={<HomePage />} />
-        </Route>
+
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        
       </Routes>
       <ToastContainer />
     </>
